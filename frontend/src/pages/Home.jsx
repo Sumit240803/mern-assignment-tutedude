@@ -7,6 +7,7 @@ const Home = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [friends, setFriends] = useState([]);
   const [requests, setRequests] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [actionLoading, setActionLoading] = useState(false);
@@ -16,7 +17,6 @@ const Home = () => {
   const [size] = useState(10);
   const API = import.meta.env.VITE_API_URL;
 
-  // Get the logged-in user's ID
   const loggedInUserId = localStorage.getItem("id");
 
   const sendRequestWithToken = (url, method, data = {}) => {
@@ -38,12 +38,8 @@ const Home = () => {
         setUsers(response.data.users);
         setFilteredUsers(response.data.users);
         setTotalPages(response.data.totalPages);
-        setLoading(false);
       })
-      .catch(() => {
-        setError("Error fetching users");
-        setLoading(false);
-      });
+      .catch(() => setError("Error fetching users"));
 
     sendRequestWithToken(`${API}/api/user/friends`, "GET")
       .then((response) => {
@@ -56,6 +52,14 @@ const Home = () => {
         setRequests(response.data.requests);
       })
       .catch(() => setError("Error fetching friend requests"));
+
+    // Fetch Friend Recommendations
+    sendRequestWithToken(`${API}/api/user/friend-recommendations`, "GET")
+      .then((response) => {
+        setRecommendations(response.data.recommendations);
+      })
+      .catch(() => setError("Error fetching friend recommendations"))
+      .finally(() => setLoading(false));
   };
 
   useEffect(fetchData, [currentPage]);
@@ -107,52 +111,66 @@ const Home = () => {
 
   return (
     <div className="home-container">
+
+      {/* User List */}
       <h2 className="title">User List</h2>
-      
-      <div className="section-container">
-        <h3 className="section-title">Friends List</h3>
-        <ul className="user-list">
-          {friends.length === 0 ? (
-            <li>No friends yet</li>
-          ) : (
-            friends.map((friend) => (
-              <li key={friend._id} className="user-item">
-                {friend.username}
-              </li>
-            ))
-          )}
-        </ul>
-      </div>
-  
-      <div className="section-container">
-        <h3 className="section-title">Friend Requests</h3>
-        <ul className="user-list">
-          {requests.length === 0 ? (
-            <li>No friend requests</li>
-          ) : (
-            requests.map((request) => (
-              <li key={request._id} className="user-item">
-                {request.username}
-                <button
-                  onClick={() => handleRequest(request._id, "accept")}
-                  className="accept-btn"
-                  disabled={actionLoading}
-                >
-                  Accept
-                </button>
-                <button
-                  onClick={() => handleRequest(request._id, "reject")}
-                  className="reject-btn"
-                  disabled={actionLoading}
-                >
-                  Reject
-                </button>
-              </li>
-            ))
-          )}
-        </ul>
-      </div>
-  
+      <h3>Friend Requests</h3>
+      <ul className="user-list">
+        {requests.length === 0 ? (
+          <li>No friend requests</li>
+        ) : (
+          requests.map((request) => (
+            <li key={request._id} className="user-item">
+              {request.username}
+              <button
+                onClick={() => handleRequest(request._id, "accept")}
+                className="accept-btn"
+                disabled={actionLoading}
+              >
+                Accept
+              </button>
+              <button
+                onClick={() => handleRequest(request._id, "reject")}
+                className="reject-btn"
+                disabled={actionLoading}
+              >
+                Reject
+              </button>
+            </li>
+          ))
+        )}
+      </ul>
+
+        {/* Friend Recommendations */}
+      <h3>Friend Recommendations</h3>
+      <ul className="user-list">
+        {recommendations.length === 0 ? (
+          <li>No recommendations available</li>
+        ) : (
+          recommendations.map((recommendation) => (
+            <li key={recommendation.user._id} className="user-item">
+              <div>
+                <strong>{recommendation.user.username}</strong>
+                <p>Mutual Friends: {recommendation.mutualFriendsCount}</p>
+                <p>
+                  Common Interests:{" "}
+                  {recommendation.commonInterests.length > 0
+                    ? recommendation.commonInterests.join(", ")
+                    : "None"}
+                </p>
+              </div>
+              <button
+                onClick={() => sendFriendRequest(recommendation.user._id)}
+                className="friend-btn"
+                disabled={actionLoading}
+              >
+                Send Friend Request
+              </button>
+            </li>
+          ))
+        )}
+      </ul>
+
       <input
         type="text"
         placeholder="Search by username..."
@@ -160,39 +178,37 @@ const Home = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="search-input"
       />
-  
       <ul className="user-list">
-        {filteredUsers.map((user) => (
-          <li key={user._id} className="user-item">
-            <div>
-              <strong>{user.username}</strong>
-              {user.hobbies.length > 0 ? (
-                <ul className="hobbies-list">
-                  {user.hobbies.map((hobby, index) => (
-                    <li key={index} className="hobby-item">
-                      {hobby}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No hobbies listed</p>
-              )}
-            </div>
-            {!isFriend(user._id) &&
-              !isRequestPending(user._id) &&
-              user._id !== loggedInUserId && (
+        {filteredUsers.length === 0 ? (
+          <li>No users found</li>
+        ) : (
+          filteredUsers.map((user) => (
+            <li key={user._id} className="user-item">
+              {user.username}
+              {user._id !== loggedInUserId && (
                 <button
                   onClick={() => sendFriendRequest(user._id)}
                   className="friend-btn"
-                  disabled={actionLoading}
+                  disabled={actionLoading || isFriend(user._id) || isRequestPending(user._id)}
                 >
-                  Send Friend Request
+                  {isFriend(user._id)
+                    ? "Friend"
+                    : isRequestPending(user._id)
+                    ? "Request Sent"
+                    : "Add Friend"}
                 </button>
               )}
-          </li>
-        ))}
+            </li>
+          ))
+        )}
       </ul>
-  
+
+      {/* Friend Requests */}
+      
+
+      
+
+      {/* Pagination */}
       <div className="pagination">
         <button
           onClick={handlePrevPage}
@@ -201,7 +217,9 @@ const Home = () => {
         >
           Prev
         </button>
-        <span className="page-info">Page {currentPage} of {totalPages}</span>
+        <span className="page-info">
+          Page {currentPage} of {totalPages}
+        </span>
         <button
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
@@ -212,8 +230,6 @@ const Home = () => {
       </div>
     </div>
   );
-  
-  
 };
 
 export default Home;
