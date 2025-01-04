@@ -133,4 +133,59 @@
       font-size: 14px;
     }
   }
+  .hobby-input-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .hobby-input-container input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .add-hobby-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-hobby-btn:hover {
+    background-color: #218838;
+  }
+  
+  .hobbies-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+  }
+  
+  .hobby-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .remove-hobby-btn {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    cursor: pointer;
+    font-size: 1.2em;
+  }
+  
+  .remove-hobby-btn:hover {
+    color: #ff0000;
+  }
   

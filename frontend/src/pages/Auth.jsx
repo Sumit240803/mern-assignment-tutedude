@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './auth.css'
+import './auth.css';
+
 const Auth = () => {
   const [isRegister, setIsRegister] = useState(false);
-  const API= import.meta.env.VITE_API_URL;
-  console.log(API)
+  const API = import.meta.env.VITE_API_URL;
+  console.log(API);
+  
   const [formData, setFormData] = useState({
     username: '',
     password: '',
+    hobbies: [],
   });
+
+  const [newHobby, setNewHobby] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -20,6 +25,23 @@ const Auth = () => {
     });
   };
 
+  const handleHobbyAdd = () => {
+    if (newHobby.trim()) {
+      setFormData({
+        ...formData,
+        hobbies: [...formData.hobbies, newHobby.trim()],
+      });
+      setNewHobby('');
+    }
+  };
+
+  const handleHobbyRemove = (hobbyToRemove) => {
+    setFormData({
+      ...formData,
+      hobbies: formData.hobbies.filter((hobby) => hobby !== hobbyToRemove),
+    });
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -27,16 +49,15 @@ const Auth = () => {
 
     try {
       const url = isRegister
-        ? `${API}/api/auth/register` // Update with your register API endpoint
-        : `${API}/api/auth/login`; // Update with your login API endpoint
+        ? `${API}/api/auth/register`
+        : `${API}/api/auth/login`;
 
       const response = await axios.post(url, formData);
       if (response.data.token) {
-        // Store the JWT token in localStorage
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('id', response.data.id);
         console.log('Success:', response.data);
-        // Redirect to the dashboard or home page
-        window.location.href = '/'; // Change to your desired redirect URL
+        window.location.href = '/profile';
       }
     } catch (err) {
       setError(err.response ? err.response.data.message : 'Something went wrong!');
@@ -73,6 +94,37 @@ const Auth = () => {
               required
             />
           </div>
+          {isRegister && (
+            <div className="input-field">
+              <label htmlFor="hobbies">Hobbies</label>
+              <div className="hobby-input-container">
+                <input
+                  type="text"
+                  id="hobbies"
+                  name="hobbies"
+                  value={newHobby}
+                  onChange={(e) => setNewHobby(e.target.value)}
+                />
+                <button type="button" className="add-hobby-btn" onClick={handleHobbyAdd}>
+                  Add Hobby
+                </button>
+              </div>
+              <ul className="hobbies-list">
+                {formData.hobbies.map((hobby, index) => (
+                  <li key={index} className="hobby-item">
+                    {hobby}
+                    <button
+                      type="button"
+                      className="remove-hobby-btn"
+                      onClick={() => handleHobbyRemove(hobby)}
+                    >
+                      &times;
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <button type="submit" className="submit-btn" disabled={loading}>
             {loading ? 'Submitting...' : isRegister ? 'Register' : 'Login'}
           </button>

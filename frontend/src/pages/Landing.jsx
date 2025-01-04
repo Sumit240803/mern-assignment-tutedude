@@ -8,7 +8,7 @@ const Landing= () => {
       <header className="header">
         <h1 className="title">Welcome to Our Social Platform</h1>
         <p className="subtitle">Connect, interact, and grow your network with ease.</p>
-        <a href="/signup" className="cta-button">Get Started</a>
+        <a href="/login" className="cta-button">Get Started</a>
       </header>
 
       {/* About Section */}

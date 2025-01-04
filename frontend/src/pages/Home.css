@@ -1,132 +1,181 @@
 /* Global Styles */
 .home-container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .search-input {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 400px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .user-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.search-input {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.user-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.friend-btn, .accept-btn, .reject-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.friend-btn:hover, .accept-btn:hover, .reject-btn:hover {
+  background-color: #0056b3;
+}
+
+.accept-btn {
+  background-color: #28a745;
+}
+
+.accept-btn:hover {
+  background-color: #218838;
+}
+
+.reject-btn {
+  background-color: #dc3545;
+}
+
+.reject-btn:hover {
+  background-color: #c82333;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-btn {
+  padding: 10px 15px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-btn:hover {
+  background-color: #5a6268;
+}
+
+.pagination-btn:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+.page-info {
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.hobbies-list {
+  list-style-type: disc;
+  margin: 10px 0 0 20px;
+  color: #555;
+}
+
+.hobby-item {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
   .user-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    background-color: #f4f4f4;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .friend-btn {
-    background-color: #28a745;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .friend-btn:hover {
-    background-color: #218838;
-  }
-  
   .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
+    flex-direction: column;
   }
-  
   .pagination-btn {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin: 0 10px;
+    margin: 5px 0;
   }
-  
-  .pagination-btn:hover {
-    background-color: #0056b3;
+}
+
+@media (max-width: 480px) {
+  .search-input {
+    font-size: 14px;
+    padding: 10px;
   }
-  
-  .page-info {
-    font-size: 16px;
-    margin: 0 20px;
+  .friend-btn, .accept-btn, .reject-btn {
+    font-size: 12px;
+    padding: 8px 12px;
   }
-  
-  /* Responsive Styles */
-  @media (max-width: 768px) {
-    .home-container {
-      padding: 10px;
-    }
-  
-    .search-input {
-      max-width: 100%;
-    }
-  
-    .user-item {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 10px;
-    }
-  
-    .friend-btn {
-      margin-top: 10px;
-    }
-  
-    .pagination {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-  
-    .pagination-btn {
-      width: auto;
-      margin-bottom: 10px; /* Space between buttons */
-      font-size: 16px;
-      margin: 0 5px;
-    }
-  
-    .page-info {
-      font-size: 14px;
-      margin: 10px 0;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .pagination-btn {
-      padding: 8px 16px;
-    }
-  
-    .page-info {
-      font-size: 14px;
-    }
-  }
-  
+}
+/* Section Container Styles */
+.section-container {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #333;
+}
+
+/* Friends and Requests List Styles */
+.user-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.user-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.user-item:last-child {
+  border-bottom: none;
+}
