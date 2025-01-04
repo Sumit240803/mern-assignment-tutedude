@@ -4,16 +4,18 @@ import './App.css'
 import Home from './pages/Home';
 import Landing from './pages/Landing';
 import Auth from './pages/Auth';
+import Navbar from './components/Navbar';
 
 function App() {
 
 
   return (
     <Router>
+      <div><Navbar/></div>
       <div>
         <Routes>
           <Route path='/' element = {<Landing/>}/>
-          <Route path='/auth' element = {<Auth/>}/>
+          <Route path='/login' element = {<Auth/>}/>
           <Route path='/profile' element = {<Home/>}/>
         </Routes>
       </div>

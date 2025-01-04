@@ -1,0 +1,136 @@
+/* General Auth Container */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    background-color: #f4f4f9;
+    padding: 10px;
+  }
+  
+  .form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+  }
+  
+  .form-container h2 {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Input Fields */
+  .input-field {
+    margin-bottom: 20px;
+  }
+  
+  .input-field label {
+    display: block;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  .input-field input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .input-field input:focus {
+    outline: none;
+    border-color: #1e2a47;
+  }
+  
+  /* Submit Button */
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #1e2a47;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #ff6f61;
+  }
+  
+  /* Toggle Link */
+  .toggle-link {
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+  .toggle-link p {
+    font-size: 14px;
+  }
+  
+  .toggle-btn {
+    color: #1e2a47;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .toggle-btn:hover {
+    color: #ff6f61;
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media (max-width: 768px) {
+    .form-container {
+      padding: 20px;
+    }
+  
+    .form-container h2 {
+      font-size: 20px;
+    }
+  
+    .input-field input {
+      font-size: 14px;
+    }
+  
+    .submit-btn {
+      font-size: 14px;
+    }
+  
+    .toggle-link p {
+      font-size: 12px;
+    }
+  
+    .toggle-btn {
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .form-container {
+      padding: 15px;
+      max-width: 100%;
+    }
+  
+    .form-container h2 {
+      font-size: 18px;
+    }
+  
+    .input-field input {
+      font-size: 14px;
+    }
+  
+    .submit-btn {
+      font-size: 14px;
+    }
+  }
+  
