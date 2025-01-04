@@ -22,6 +22,12 @@ const userSchema = mongoose.Schema({
             type: String,
         },
     ],
+    requests: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ]
 });
 
 // Pre-save middleware to hash the password
