@@ -1,0 +1,132 @@
+/* Global Styles */
+.home-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .search-input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .user-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background-color: #f4f4f4;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .friend-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .friend-btn:hover {
+    background-color: #218838;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .pagination-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 10px;
+  }
+  
+  .pagination-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .page-info {
+    font-size: 16px;
+    margin: 0 20px;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .home-container {
+      padding: 10px;
+    }
+  
+    .search-input {
+      max-width: 100%;
+    }
+  
+    .user-item {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+    }
+  
+    .friend-btn {
+      margin-top: 10px;
+    }
+  
+    .pagination {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .pagination-btn {
+      width: auto;
+      margin-bottom: 10px; /* Space between buttons */
+      font-size: 16px;
+      margin: 0 5px;
+    }
+  
+    .page-info {
+      font-size: 14px;
+      margin: 10px 0;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .pagination-btn {
+      padding: 8px 16px;
+    }
+  
+    .page-info {
+      font-size: 14px;
+    }
+  }
+  
