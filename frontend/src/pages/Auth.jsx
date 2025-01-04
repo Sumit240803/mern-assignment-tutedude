@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-
+import axios from 'axios';
+import './auth.css'
 const Auth = () => {
   const [isRegister, setIsRegister] = useState(false);
+  const API= import.meta.env.VITE_API_URL;
+  console.log(API)
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -15,15 +20,29 @@ const Auth = () => {
     });
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here based on isRegister state
-    if (isRegister) {
-      // Register logic (you can send a POST request to your server for registration)
-      console.log('Registering:', formData);
-    } else {
-      // Login logic (send a POST request to your server for login)
-      console.log('Logging in:', formData);
+    setLoading(true);
+    setError(null);
+
+    try {
+      const url = isRegister
+        ? `${API}/api/auth/register` // Update with your register API endpoint
+        : `${API}/api/auth/login`; // Update with your login API endpoint
+
+      const response = await axios.post(url, formData);
+      if (response.data.token) {
+        // Store the JWT token in localStorage
+        localStorage.setItem('token', response.data.token);
+        console.log('Success:', response.data);
+        // Redirect to the dashboard or home page
+        window.location.href = '/'; // Change to your desired redirect URL
+      }
+    } catch (err) {
+      setError(err.response ? err.response.data.message : 'Something went wrong!');
+      console.log('Error:', err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,13 +73,14 @@ const Auth = () => {
               required
             />
           </div>
-          <button type="submit" className="submit-btn">
-            {isRegister ? 'Register' : 'Login'}
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? 'Submitting...' : isRegister ? 'Register' : 'Login'}
           </button>
+          {error && <p className="error-message">{error}</p>}
         </form>
         <div className="toggle-link">
           <p>
-            {isRegister ? 'Already have an account?' : 'Don’t have an account?'}
+            {isRegister ? 'Already have an account?' : "Don’t have an account?"}
             <span
               className="toggle-btn"
               onClick={() => setIsRegister(!isRegister)}
