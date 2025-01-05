@@ -14,7 +14,7 @@ app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended : true}));
 app.use("/api/auth" , authRoutes)
 app.use("/api/user" , userRoute)
-mongoose.connect(process.env.DB_URL).then(()=>console.log("DB connected"));
+mongoose.connect(process.env.DB_URL).then(()=>console.log("DB connected")).catch((err)=>console.log("Error while connecting" , err));
 
 const port = process.env.PORT || 5000;
 app.listen(port , ()=>{
